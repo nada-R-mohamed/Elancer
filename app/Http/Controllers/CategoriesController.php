@@ -16,6 +16,7 @@ class CategoriesController extends Controller
         'description' => ['required','string'],
         'art_file' => ['nullable','mimes:png,jpg,jpeg'],
     ];
+
     public function index()
     {
         $categories = DB::table('categories')->get();
@@ -26,10 +27,10 @@ class CategoriesController extends Controller
 
     }
 
-    public function show($id)
+    public function show(Category $category)
     {
 
-        $category = Category::findOrFail($id);
+        // $category = Category::findOrFail($id);
 
         return view('categories.show',compact('category'));
 
@@ -54,44 +55,42 @@ class CategoriesController extends Controller
         $category->slug = Str::slug($category->name);
         $category->save();
 
-        return redirect('/categories')->with('success','Category Created successfully!'); //PRG
+        return redirect()
+        ->route('categories.index')
+        ->with('success','Category Created successfully!'); //PRG
     }
 
-    public function edit($id)
+    public function edit(Category $category)
     {
 
-        $category = Category::findOrFail($id);
+        // $category = Category::findOrFail($id);
         $parents = Category::get();
 
         return view('categories.edit',compact('category','parents'));
     }
 
-    public function update(Request $request,$id)
+    public function update(Request $request,Category $category)
     {
         $request->validate($this->rules);
-        $category = Category::findOrFail($id);
+        // $category = Category::findOrFail($id);
         $category->name = $request->input('name');
         $category->description = $request->input('description');
         $category->parent_id = $request->input('parent_id');
         $category->slug = Str::slug($category->name);
         $category->save();
 
-        return redirect('/categories')->with('success','Category Updated successfully!'); //PRG
+        return redirect()
+        ->route('categories.index')
+        ->with('success','Category Updated successfully!'); //PRG
     }
 
-    public function destroy($id)
+    public function destroy(Category $category)
     {
 
-        Category::destroy($id);
-        return redirect('/categories')->with('success','Category Deleted successfully!');
+        Category::destroy($category);
+        return redirect()
+        ->route('categories.index')
+        ->with('success','Category Deleted successfully!');
 
     }
-
-    // protected function rules()
-    // {
-    //     $rules = $this->rules;
-    //     $rules['name'][] = new FilterRule();
-
-    //     return $rules;
-    // }
 }

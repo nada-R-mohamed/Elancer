@@ -15,15 +15,31 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
 });
 
+Route::group([
+    'prefix' => '/dashboard',
+], function () {
 
-Route::get('categories',[CategoriesController::class,'index']);
-Route::get('categories/create',[CategoriesController::class,'create']);
-Route::get('categories/{id}',[CategoriesController::class,'show']);
-Route::post('categories',[CategoriesController::class,'store']);
-Route::get('categories/{id}/edit',[CategoriesController::class,'edit']);
-Route::put('categories/{id}',[CategoriesController::class,'update']);
-Route::delete('categories/{id}',[CategoriesController::class,'destroy']);
+    Route::prefix('/categories')
+        ->as('categories.')
+        ->group(function () {
 
+            Route::get('/', [CategoriesController::class, 'index'])
+                    ->name('index');
+            Route::get('/create', [CategoriesController::class, 'create'])
+                    ->name('create');
+            Route::get('/{category}', [CategoriesController::class, 'show'])
+                    ->name('show');
+            Route::post('/', [CategoriesController::class, 'store'])
+                    ->name('store');
+            Route::get('/{category}/edit', [CategoriesController::class, 'edit'])
+                    ->name('edit');
+            Route::put('/{category}', [CategoriesController::class, 'update'])
+                    ->name('update');
+            Route::delete('/{category}', [CategoriesController::class, 'destroy'])
+                    ->name('destroy');
+
+        });
+});

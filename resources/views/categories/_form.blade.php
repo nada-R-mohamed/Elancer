@@ -1,6 +1,6 @@
 <div class="form-group">
     <label for="name">Name:</label>
-    <input type="text" name="name" value="{{ $category->name }}" id="name" class="form-control">
+    <input type="text" name="name" value="{{ old('name',$category->name) }}" id="name" class="form-control">
     @error('name')
         <p class="text-danger">{{ $message }}</p>
     @enderror
@@ -8,7 +8,7 @@
 
 <div class="form-group">
     <label for="description">Description:</label>
-    <textarea name="description" id="description" class="form-control">{{ $category->description }}</textarea>
+    <textarea name="description" id="description" class="form-control">{{ old('description',$category->description     ) }}</textarea>
     @error('description')
         <p class="text-danger">{{ $message }}</p>
     @enderror
@@ -19,7 +19,7 @@
     <select name="parent_id" id="parent_id" class="form-control">
         <option value="">No Parent</option>
         @foreach ($parents as $parent)
-            <option value="{{ $parent->id }}" @if ($parent->id == $category->parent_id) selected @endif>{{ $parent->name }}</option>
+            <option value="{{ $parent->id }}" @if ($parent->id == old('parent_id',$category->parent_id)) selected @endif>{{ $parent->name }}</option>
         @endforeach
 
     </select>

@@ -5,7 +5,7 @@
 @section('content')
 
 
-    <form action="/categories" method="post">
+    <form action="{{ route('categories.store') }}" method="post">
         @csrf
 
         @include('categories._form')
