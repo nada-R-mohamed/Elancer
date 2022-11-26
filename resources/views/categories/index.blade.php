@@ -34,7 +34,7 @@
                     <td>{{ $category->id }}</td>
                     <td><a href="{{ route('categories.show',$category->id )}}">{{ $category->name }}</a></td>
                     <td>{{ $category->slug }}</td>
-                    <td>{{ $category->parent_id }}</td>
+                    <td>{{ $category->parent_name }}</td>
                     <td>{{ $category->created_at }}</td>
                     <td>{{ $category->updated_at }}</td>
                     <td><a href="{{ route('categories.edit',$category->id) }}" class="btn btn-sm btn-dark">Edit</a></td>
@@ -52,4 +52,6 @@
 
 
     </div>
+
+    {{ $categories->withQueryString()->appends(['q'=> 'test'])->links() }}
 @endsection

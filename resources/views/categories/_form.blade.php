@@ -7,6 +7,14 @@
 </div>
 
 <div class="form-group">
+    <label for="name">Slug:</label>
+    <input type="text" name="slug" value="{{ old('slug',$category->slug) }}" id="slug" class="form-control">
+    {{-- @error('slug')
+        <p class="text-danger">{{ $message }}</p>
+    @enderror --}}
+</div>
+
+<div class="form-group">
     <label for="description">Description:</label>
     <textarea name="description" id="description" class="form-control">{{ old('description',$category->description     ) }}</textarea>
     @error('description')
