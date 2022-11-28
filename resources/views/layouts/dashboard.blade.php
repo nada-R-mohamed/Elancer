@@ -185,8 +185,15 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             class="img-circle elevation-2" alt="User Image">
                     </div>
                     <div class="info">
-                        <a href="#" class="d-block">Alexander Pierce</a>
+                        <a href="#" class="d-block">{{ Auth::user()->name }}</a>
                     </div>
+                </div>
+                
+                <div class="user-panel mt-3 pb-3 mb-3">
+                    <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout').submit();">Logout</a>
+                    <form action="{{ route('logout') }}" method="post" style="display: none;" id="logout">
+                        @csrf
+                    </form>
                 </div>
 
                 <!-- SidebarSearch Form -->

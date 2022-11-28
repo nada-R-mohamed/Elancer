@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Dashboard\CategoriesController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,34 +18,15 @@ Route::get('/', function () {
     return view('home');
 });
 
-Route::group([
-    'prefix' => '/dashboard',
-    // 'namespace' => 'Dashboard',
-], function () {
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
 
-    Route::resource(
-        'categories',
-        CategoriesController::class
-    );
-
-    // Route::prefix('/categories')
-    //     ->as('categories.')
-    //     ->group(function () {
-
-    //         Route::get('/', [CategoriesController::class, 'index'])
-    //                 ->name('index');
-    //         Route::get('/create', [CategoriesController::class, 'create'])
-    //                 ->name('create');
-    //         Route::get('/{category}', [CategoriesController::class, 'show'])
-    //                 ->name('show');
-    //         Route::post('/', [CategoriesController::class, 'store'])
-    //                 ->name('store');
-    //         Route::get('/{category}/edit', [CategoriesController::class, 'edit'])
-    //                 ->name('edit');
-    //         Route::put('/{category}', [CategoriesController::class, 'update'])
-    //                 ->name('update');
-    //         Route::delete('/{category}', [CategoriesController::class, 'destroy'])
-    //                 ->name('destroy');
-
-    //     });
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+require __DIR__.'/auth.php';
+require __DIR__.'/dashboard.php';
